@@ -1,0 +1,18 @@
+# Môi trường ảo
+env/
+venv/
+
+# Thư mục cache Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# File database SQLite (nếu không dùng PostgreSQL)
+db.sqlite3
+
+# Logs
+*.log
+
+# Secrets (nếu có)
+.env
