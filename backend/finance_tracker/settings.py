@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'corsheaders',
+    'rest_framework',           # Thêm DRF
+    'corsheaders',              # Thêm CORS
+    'api',                      # App của bạn
 ]
 
 MIDDLEWARE = [
