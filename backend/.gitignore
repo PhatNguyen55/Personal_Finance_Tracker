@@ -4,9 +4,7 @@ venv/
 
 # Thư mục cache Python
 __pycache__/
-*.pyc
-*.pyo
-*.pyd
+Pipfile.lock
 
 # File database SQLite (nếu không dùng PostgreSQL)
 db.sqlite3

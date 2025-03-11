@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import hello_world
-
+from . import views
 urlpatterns = [
-    path('hello/', hello_world),
+    path('notes/', views.NoteListCreateView.as_view(), name='note-list-create'),
+    path('notes/delete/<int:pk>/', views.NoteDelete.as_view(), name='note-delete'),
 ]
