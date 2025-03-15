@@ -9,6 +9,9 @@ class RegistrationView(View):
     def get(self, request):
         return render(request, 'authentication/register.html')
     
+    def post(self, request):
+        return JsonResponse({'registration': 'successful'})
+    
 class UsernameValidationView(View):
     def post(self, request):
         data = json.loads(request.body)
