@@ -5,6 +5,8 @@ from django.contrib.auth.decorators import login_required
 from .models import Category, Expense
 from django.contrib import messages
 from django.core.paginator import Paginator
+from userpreferences.models import UserPreference
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 @login_required(login_url='/authentication/login')
@@ -14,11 +16,14 @@ def index(request):
     paginator = Paginator(expenses, 5)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
-    # currency = UserPreference.objects.get(user=request.user).currency
+    try:
+        currency = UserPreference.objects.get(user=request.user).currency
+    except ObjectDoesNotExist:
+        currency = '(VND - Vietnamese Dong)'
     context = {
         'expenses': expenses,
         'page_obj': page_obj,
-        # 'currency': currency
+        'currency': currency
     }
     return render(request, 'expenses/index.html', context)
 
