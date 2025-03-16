@@ -82,10 +82,10 @@ WSGI_APPLICATION = 'finance_tracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'finance_trackerdb',
-        'USER': 'postgres',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
         'PASSWORD': os.getenv('DB_PASSWORD'),
-        'HOST': 'localhost',
+        'HOST': os.getenv('DB_HOST'),
     }
 }
 
@@ -138,3 +138,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MESSAGE_TAGS= {
     messages.ERROR: 'danger'
 }
+
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_USE_TLS = True
+DEFAULT_FROM_EMAIL = os.getenv('EMAIL_HOST_USER')
+EMAIL_PORT = 587
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
