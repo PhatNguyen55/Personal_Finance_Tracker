@@ -27,6 +27,7 @@ def index(request):
     }
     return render(request, 'expenses/index.html', context)
 
+@login_required(login_url='/authentication/login')
 def add_expense(request):
     categories = Category.objects.all()
     context = {
@@ -55,7 +56,8 @@ def add_expense(request):
         messages.success(request, 'Expense saved successfully')
 
         return redirect('expenses')
-    
+   
+@login_required(login_url='/authentication/login') 
 def expense_edit(request, id):
     expense = Expense.objects.get(pk=id)
     categories = Category.objects.all()
@@ -90,7 +92,8 @@ def expense_edit(request, id):
         messages.success(request, 'Expense updated  successfully')
 
         return redirect('expenses')
-    
+
+@login_required(login_url='/authentication/login') 
 def delete_expense(request, id):
     expense = Expense.objects.get(pk=id)
     expense.delete()
