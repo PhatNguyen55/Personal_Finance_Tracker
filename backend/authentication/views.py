@@ -1,3 +1,4 @@
+import threading
 from django.core.mail import EmailMessage
 import json
 from django.http import JsonResponse
@@ -53,7 +54,7 @@ class RegistrationView(View):
                     'noreply@finance_tracker.com',
                     [email],
                 )
-                email.send(fail_silently=False)
+                EmailThread(email).start()
                 messages.success(request, 'Account created successfully')
                 return render(request, 'authentication/register.html')
         return render(request, 'authentication/register.html', context)
@@ -126,3 +127,11 @@ class VerificationView(View):
             pass
 
         return redirect('login')
+    
+    
+class EmailThread(threading.Thread):
+    def __init__(self, email):
+        self.email = email
+        threading.Thread.__init__(self)
+    def run(self):
+        self.email.send(fail_silently=False)
