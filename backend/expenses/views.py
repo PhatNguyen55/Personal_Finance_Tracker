@@ -51,6 +51,14 @@ def add_expense(request):
         if not description:
             messages.error(request, 'description is required')
             return render(request, 'expenses/add_expense.html', context)
+        
+        if not date:
+            messages.error(request, 'Date is required')
+            return render(request, 'expenses/add_expense.html', context)
+
+        if not category:
+            messages.error(request, 'Category is required')
+            return render(request, 'expenses/add_expense.html', context)
 
         Expense.objects.create(owner=request.user, amount=amount, date=date,
                                category=category, description=description)
@@ -85,7 +93,7 @@ def expense_edit(request, id):
 
         expense.owner = request.user
         expense.amount = amount
-        expense. date = date
+        expense.date = date
         expense.category = category
         expense.description = description
 

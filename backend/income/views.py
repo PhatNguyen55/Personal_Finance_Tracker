@@ -8,6 +8,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.contrib import messages
+from django.core.exceptions import ObjectDoesNotExist
 
 # Create your views here.
 def search_income(request):
@@ -24,12 +25,15 @@ def search_income(request):
 
 @login_required(login_url='/authentication/login')
 def index(request):
-    categories = Source.objects.all()
+    source = Source.objects.all()
     income = Income.objects.filter(owner=request.user)
     paginator = Paginator(income, 5)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
-    currency = UserPreference.objects.get(user=request.user).currency
+    try:
+        currency = UserPreference.objects.get(user=request.user).currency
+    except ObjectDoesNotExist:
+        currency = '(VND - Vietnamese Dong)'
     context = {
         'income': income,
         'page_obj': page_obj,
@@ -60,6 +64,14 @@ def add_income(request):
 
         if not description:
             messages.error(request, 'description is required')
+            return render(request, 'income/add_income.html', context)
+        
+        if not date:
+            messages.error(request, 'Date is required')
+            return render(request, 'income/add_income.html', context)
+        
+        if not source:
+            messages.error(request, 'Source is required')  
             return render(request, 'income/add_income.html', context)
 
         Income.objects.create(owner=request.user, amount=amount, date=date,
@@ -103,7 +115,7 @@ def income_edit(request, id):
 
         return redirect('income')
 
-
+@login_required(login_url='/authentication/login')
 def delete_income(request, id):
     income = Income.objects.get(pk=id)
     income.delete()
