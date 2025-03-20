@@ -26,7 +26,7 @@ def search_income(request):
 @login_required(login_url='/authentication/login')
 def index(request):
     source = Source.objects.all()
-    income = Income.objects.filter(owner=request.user)
+    income = Income.objects.filter(owner=request.user).order_by('-date')
     paginator = Paginator(income, 5)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)

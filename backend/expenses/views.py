@@ -13,7 +13,7 @@ from django.core.exceptions import ObjectDoesNotExist
 @login_required(login_url='/authentication/login')
 def index(request):
     categories = Category.objects.all()
-    expenses = Expense.objects.filter(owner=request.user)
+    expenses = Expense.objects.filter(owner=request.user).order_by('-date')
     paginator = Paginator(expenses, 5)
     page_number = request.GET.get('page')
     page_obj = Paginator.get_page(paginator, page_number)
