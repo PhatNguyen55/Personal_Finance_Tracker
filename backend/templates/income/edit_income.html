@@ -49,13 +49,13 @@
         <div class="form-group">
           <label for="">Source</label>
           <select class="form-control" name="source">
-            <option selected name="source" value="{{values.source}}"
-              >{{values.source}}</option
-            >
+            <option selected name="source" value="{{values.source}}">
+              {{values.source}}
+            </option>
             {% for source in sources%}
-            <option name="source" value="{{source.name}}"
-              >{{source.name}}</option
-            >
+            <option name="source" value="{{source.name}}">
+              {{source.name}}
+            </option>
 
             {% endfor %}
           </select>
@@ -77,6 +77,12 @@
         />
       </form>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var today = new Date().toISOString().split("T")[0];
+        document.getElementsByName("income_date")[0].setAttribute("max", today);
+      });
+    </script>
   </div>
 </div>
 

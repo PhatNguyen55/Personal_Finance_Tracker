@@ -36,9 +36,9 @@
           <label for="">Category</label>
           <select class="form-control" name="category">
             {% for category in categories%}
-            <option name="category" value="{{category.name}}"
-              >{{category.name}}</option
-            >
+            <option name="category" value="{{category.name}}">
+              {{category.name}}
+            </option>
 
             {% endfor %}
           </select>
@@ -59,6 +59,14 @@
         />
       </form>
     </div>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        var today = new Date().toISOString().split("T")[0];
+        document
+          .getElementsByName("expense_date")[0]
+          .setAttribute("max", today);
+      });
+    </script>
   </div>
 </div>
 
